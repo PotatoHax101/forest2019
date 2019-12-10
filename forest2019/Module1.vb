@@ -1,4 +1,4 @@
-﻿Structure tree
+﻿Structure Tree
 
     Public _age, _ratio As Integer
     Public _disease, _mapleSyrup As Boolean
@@ -18,9 +18,9 @@ Module Module1
 
     Function treeDistribution()
 
-        Dim forest(10000) As tree
-        Dim pine As tree
-        Dim oak As tree
+        Dim forest(10000) As Tree
+        Dim pine As Tree
+        Dim oak As Tree
 
         Dim totalRatio As Integer = ratioCalculation(pine, 4, oak, 1)
 
@@ -42,9 +42,11 @@ Module Module1
 
         Next
 
+        Return forest
+
     End Function
 
-    Function ratioCalculation(ByRef treeType1 As tree, ByRef ratio1 As Integer, ByRef treeType2 As tree, ByRef ratio2 As Integer) 'calculating total ratio, used to work out how to distrib trees
+    Function ratioCalculation(ByRef treeType1 As Tree, ByRef ratio1 As Integer, ByRef treeType2 As Tree, ByRef ratio2 As Integer) 'calculating total ratio, used to work out how to distrib trees
 
         treeType1._ratio = ratio1
         Console.WriteLine(treeType1._ratio)
