@@ -26,8 +26,6 @@ Module Module1
 
         For i = 1 To forest.Length
 
-            'Console.WriteLine(i)
-
             If i Mod totalRatio = 0 Then
 
                 forest(i - 1)._treeType = "oak"
@@ -59,6 +57,11 @@ Module Module1
 
         Return totalRatio
 
+    End Function
+
+    Function ageing()
+        'pine trees can only be cut down between the ages of 25 and 70 years 
+        'oak trees can only be harvested between the ages of 90 and 150 years 
     End Function
 
 End Module
