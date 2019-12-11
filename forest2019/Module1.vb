@@ -10,25 +10,25 @@ Module Module1
 
     Sub Main()
 
-        treeDistribution()
+        Dim forest(100, 100) As Tree 'Dimensions: 0, 1
+        Dim pine As Tree
+        Dim oak As Tree
 
+        treeDistribution(pine, oak, forest)
+
+        management(pine, oak, forest)
 
         Console.Read()
 
     End Sub
 
-    Function treeDistribution()
-
-        Dim forest(100, 100) As Tree 'Dimensions: 0, 1
-        Dim pine As Tree
-        Dim oak As Tree
+    Function treeDistribution(ByRef pine As Tree, ByRef oak As Tree, ByRef forest(,) As Tree)
 
         Dim totalRatio As Integer = ratioCalculation(pine, 4, oak, 1)
         Dim forestUpper As Integer = forest.GetUpperBound(0) 'Getting first dimension of 2D array
         Dim forestLower As Integer = forest.GetUpperBound(1) 'Getting second dimension of 2D array
 
         Dim randNum As New Random()
-
 
         For i = 1 To forestUpper
 
@@ -46,7 +46,7 @@ Module Module1
 
                 forest(i - 1, q - 1)._age = randNum.Next(1, 201)
 
-                Console.WriteLine(forest(i - 1, q - 1)._age)
+                'Console.WriteLine(forest(i - 1, q - 1)._age)
 
             Next
 
@@ -71,28 +71,68 @@ Module Module1
 
     End Function
 
-    Sub management(ByRef pine As Tree, ByRef oak As Tree)
+    Sub management(ByRef pine As Tree, ByRef oak As Tree, ByRef forest(,) As Tree)
 
 
 
         'pine trees can only be cut down between the ages of 25 and 70 years 
         'oak trees can only be harvested between the ages of 90 and 150 years
 
-        For i = 1 To 25
+        'For i = 1 To 25
 
-            'Sub Cut
-            'Sub plantOp
-            'Sub Age
+        Cut(forest)
+        'Sub plantOp
+        'Sub Age
+
+        'Next
+
+    End Sub
+
+    Sub Cut(ByRef forest(,) As Tree)
+
+        Dim forestUpper As Integer = forest.GetUpperBound(0) - 1 'Getting first dimension of 2D array
+        Dim forestLower As Integer = forest.GetUpperBound(1) - 1 'Getting second dimension of 2D array
+        Dim treePlantCount As Integer
+
+        For i = 0 To forestUpper
+
+            treePlantCount = 1
+
+            For q = 0 To forestLower
+
+                If (forest(i, q)._age > 25) And (forest(i, q)._age < 70) And (forest(i, q)._treeType = "pine") Then
+
+                    treePlantCount += 1
+                    forest(i, q)._age = 0
+                    forest(i, q)._treeType = isMaple(treePlantCount, forest(i, q))
+
+                ElseIf (forest(i, q)._age > 90) And (forest(i, q)._age < 150) And (forest(i, q)._treeType = "oak") Then
+
+                    treePlantCount += 1
+                    forest(i, q)._age = 0
+                    forest(i, q)._treeType = isMaple(treePlantCount, forest(i, q))
+
+                End If
+
+                Console.WriteLine(forest(i, q)._treeType)
+
+            Next
 
         Next
 
     End Sub
 
-    Sub Cut()
+    Function isMaple(ByVal treePlantCount As Integer, ByRef chosenTree As Tree)
 
+        If treePlantCount Mod 3 = 0 Then
 
+            chosenTree._treeType = "maple"
 
-    End Sub
+        End If
+
+        Return chosenTree._treeType
+
+    End Function
 
     Sub plantOp()
 
