@@ -84,6 +84,8 @@ Module Module1
             numberOfBuckets = mapleCollection(forest)
             Age(forest)
 
+            'Console.WriteLine("Number of buckets needed: " & numberOfBuckets)
+
         Next
 
     End Sub
@@ -102,19 +104,24 @@ Module Module1
 
                 If (forest(i, q)._age > 25) And (forest(i, q)._age < 70) And (forest(i, q)._treeType = "pine") Then
 
+                    'Console.WriteLine("Tree " & (i * q) & " has been cut")
+                    'Console.WriteLine("Tree Type: " & forest(i, q)._treeType)
+
                     treePlantCount += 1
                     forest(i, q)._age = 0
                     forest(i, q)._treeType = isMaple(treePlantCount, forest(i, q))
 
                 ElseIf (forest(i, q)._age > 90) And (forest(i, q)._age < 150) And (forest(i, q)._treeType = "oak") Then
 
+                    'Console.WriteLine("Tree " & (i * q) & " has been cut")
+                    'Console.WriteLine("Tree Type: " & forest(i, q)._treeType)
+
                     treePlantCount += 1
                     forest(i, q)._age = 0
                     forest(i, q)._treeType = isMaple(treePlantCount, forest(i, q))
 
-                End If
 
-                'Console.WriteLine(forest(i, q)._treeType)
+                End If
 
             Next
 
@@ -155,7 +162,7 @@ Module Module1
 
         Next
 
-        Console.WriteLine(forest(0, 0)._age)
+        'Console.WriteLine(forest(15, 8)._age)
 
 
     End Sub
@@ -175,9 +182,7 @@ Module Module1
         Dim forestUpper As Integer = forest.GetUpperBound(0) - 1 'Getting first dimension of 2D array
         Dim forestLower As Integer = forest.GetUpperBound(1) - 1 'Getting second dimension of 2D array
 
-        Dim syrupAmount As Integer
-
-        Dim mapleTrees() As Tree
+        Dim syrupAmount As Double
 
         For i = 0 To forestUpper - 1
 
@@ -196,5 +201,7 @@ Module Module1
         Return syrupAmount / 0.5
 
     End Function
+
+
 
 End Module
