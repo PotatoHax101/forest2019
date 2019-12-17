@@ -73,18 +73,18 @@ Module Module1
 
     Sub management(ByRef pine As Tree, ByRef oak As Tree, ByRef forest(,) As Tree)
 
-
+        Dim numberOfBuckets As Integer
 
         'pine trees can only be cut down between the ages of 25 and 70 years 
         'oak trees can only be harvested between the ages of 90 and 150 years
 
-        'For i = 1 To 25
+        For i = 0 To 25
 
-        Cut(forest)
-        'Sub plantOp
-        'Sub Age
+            Cut(forest)
+            numberOfBuckets = mapleCollection(forest)
+            Age(forest)
 
-        'Next
+        Next
 
     End Sub
 
@@ -114,7 +114,7 @@ Module Module1
 
                 End If
 
-                Console.WriteLine(forest(i, q)._treeType)
+                'Console.WriteLine(forest(i, q)._treeType)
 
             Next
 
@@ -134,16 +134,67 @@ Module Module1
 
     End Function
 
-    Sub plantOp()
+    Sub Age(ByRef forest(,) As Tree)
 
+        Dim forestUpper As Integer = forest.GetUpperBound(0) - 1 'Getting first dimension of 2D array
+        Dim forestLower As Integer = forest.GetUpperBound(1) - 1 'Getting second dimension of 2D array
+
+        For i = 0 To forestUpper - 1
+
+            For q = 0 To forestLower - 1
+
+                forest(i, q)._age += 1
+
+                If forest(i, q)._treeType = "maple" Then
+
+                    readyForMapleHarvest(forest(i, q))
+
+                End If
+
+            Next
+
+        Next
+
+        Console.WriteLine(forest(0, 0)._age)
 
 
     End Sub
 
-    Sub Age()
+    Sub readyForMapleHarvest(ByRef maple As Tree)
 
+        If maple._age >= 4 And maple._mapleSyrup = False Then
 
+            maple._mapleSyrup = True
+
+        End If
 
     End Sub
+
+    Function mapleCollection(ByVal forest(,) As Tree)
+
+        Dim forestUpper As Integer = forest.GetUpperBound(0) - 1 'Getting first dimension of 2D array
+        Dim forestLower As Integer = forest.GetUpperBound(1) - 1 'Getting second dimension of 2D array
+
+        Dim syrupAmount As Integer
+
+        Dim mapleTrees() As Tree
+
+        For i = 0 To forestUpper - 1
+
+            For q = 0 To forestLower - 1
+
+                If forest(i, q)._treeType = "maple" And forest(i, q)._mapleSyrup = True Then
+
+                    syrupAmount += 1.5
+
+                End If
+
+            Next
+
+        Next
+
+        Return syrupAmount / 0.5
+
+    End Function
 
 End Module
