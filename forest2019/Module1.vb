@@ -1,4 +1,6 @@
-﻿Structure Tree
+﻿Imports System.IO
+
+Structure Tree
 
     Public _age, _ratio As Integer
     Public _disease, _mapleSyrup, _onFire As Boolean
@@ -91,6 +93,8 @@ Module Module1
         'pine trees can only be cut down between the ages of 25 and 70 years 
         'oak trees can only be harvested between the ages of 90 and 150 years
 
+        display(forest)
+
         For i = 0 To 25
 
             Cut(forest)
@@ -112,13 +116,34 @@ Module Module1
 
             For q = 0 To forestLower
 
-
+                Console.Write(treeDraw(forest(i, q)))
+                Console.Write(" ")
 
             Next
 
         Next
 
     End Sub
+
+    Function treeDraw(ByVal currentTree As Tree)
+
+        Dim content As String = "", output As String = ""
+        Dim treeType = currentTree._treeType
+
+        Using textReader As StreamReader = New StreamReader(treeType & ".txt")
+
+            While Not textReader.EndOfStream
+
+                content = textReader.ReadLine()
+                output += vbCrLf + content
+
+            End While
+
+        End Using
+
+        Return output
+
+    End Function
 
     Sub Cut(ByRef forest(,) As Tree)
 
