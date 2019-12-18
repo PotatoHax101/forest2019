@@ -3,6 +3,14 @@
     Public _age, _ratio As Integer
     Public _disease, _mapleSyrup, _onFire As Boolean
     Public _treeType As String
+    Public _isInfected As Boolean
+
+End Structure
+
+Structure Spread
+
+    Public _spread, _infectionChance As Integer 'How many times a year it spreads, the chance of infection (1 - 10)
+    Public _name As String
 
 End Structure
 
@@ -75,6 +83,11 @@ Module Module1
 
         Dim numberOfBuckets As Integer
 
+        Dim disease As Spread
+        disease._spread = 3
+        disease._infectionChance = 3
+        disease._name = "disease"
+
         'pine trees can only be cut down between the ages of 25 and 70 years 
         'oak trees can only be harvested between the ages of 90 and 150 years
 
@@ -85,6 +98,23 @@ Module Module1
             Age(forest)
 
             'Console.WriteLine("Number of buckets needed: " & numberOfBuckets)
+
+        Next
+
+    End Sub
+
+    Sub display(ByVal forest(,) As Tree)
+
+        Dim forestUpper As Integer = forest.GetUpperBound(0) - 1 'Getting first dimension of 2D array
+        Dim forestLower As Integer = forest.GetUpperBound(1) - 1 'Getting second dimension of 2D array
+
+        For i = 0 To forestUpper
+
+            For q = 0 To forestLower
+
+
+
+            Next
 
         Next
 
@@ -146,17 +176,11 @@ Module Module1
         Dim forestUpper As Integer = forest.GetUpperBound(0) - 1 'Getting first dimension of 2D array
         Dim forestLower As Integer = forest.GetUpperBound(1) - 1 'Getting second dimension of 2D array
 
-        For i = 0 To forestUpper - 1
+        For i = 0 To forestUpper
 
-            For q = 0 To forestLower - 1
+            For q = 0 To forestLower
 
                 forest(i, q)._age += 1
-
-                If forest(i, q)._treeType = "maple" Then
-
-                    readyForMapleHarvest(forest(i, q))
-
-                End If
 
             Next
 
@@ -164,31 +188,20 @@ Module Module1
 
         'Console.WriteLine(forest(15, 8)._age)
 
-
     End Sub
 
-    Sub readyForMapleHarvest(ByRef maple As Tree)
-
-        If maple._age >= 4 And maple._mapleSyrup = False Then
-
-            maple._mapleSyrup = True
-
-        End If
-
-    End Sub
-
-    Function mapleCollection(ByVal forest(,) As Tree)
+    Function mapleCollection(ByRef forest(,) As Tree)
 
         Dim forestUpper As Integer = forest.GetUpperBound(0) - 1 'Getting first dimension of 2D array
         Dim forestLower As Integer = forest.GetUpperBound(1) - 1 'Getting second dimension of 2D array
 
         Dim syrupAmount As Double
 
-        For i = 0 To forestUpper - 1
+        For i = 0 To forestUpper
 
-            For q = 0 To forestLower - 1
+            For q = 0 To forestLower
 
-                If forest(i, q)._treeType = "maple" And forest(i, q)._mapleSyrup = True Then
+                If forest(i, q)._treeType = "maple" And forest(i, q)._age >= 4 Then
 
                     syrupAmount += 1.5
 
@@ -202,6 +215,43 @@ Module Module1
 
     End Function
 
+    Sub diseaseSpread(ByRef forest(,) As Tree, ByVal disease As Spread)
 
+        Dim forestUpper As Integer = forest.GetUpperBound(0) - 1 'Getting first dimension of 2D array
+        Dim forestLower As Integer = forest.GetUpperBound(1) - 1 'Getting second dimension of 2D array
+
+        Dim luckyDip As New Random()
+
+        For i = 0 To forestUpper - 1
+
+            For q = 0 To forestLower - 1
+
+                If RandomNumberGeneration(1, 100) = 55 Then
+
+                    forest(i, q)._isInfected = True
+
+                End If
+
+            Next
+
+        Next
+
+        'For i = 1 To disease._spread
+
+
+
+        'Next
+
+    End Sub
+
+    Function RandomNumberGeneration(ByVal firstIndex As Integer, ByVal lastIndex As Integer)
+
+        Dim rnd As New Random()
+
+        Dim rndNumb As Integer
+
+        Return rndNumb = rnd.Next(firstIndex, lastIndex + 1)
+
+    End Function
 
 End Module
